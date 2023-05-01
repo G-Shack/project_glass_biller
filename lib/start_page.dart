@@ -116,6 +116,7 @@ class _StartPageState extends State<StartPage> {
                     child: TextField(
                       onChanged: (value) {
                         getBillNo = int.parse(value);
+                        //TODO Got the bill no here
                       },
                       keyboardType: TextInputType.datetime,
                       decoration: InputDecoration(
@@ -142,8 +143,7 @@ class _StartPageState extends State<StartPage> {
                     Fluttertoast.showToast(
                         msg: "Enter Bill No.",
                         toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity
-                            .BOTTOM, // also possible "TOP" and "CENTER"
+                        gravity: ToastGravity.BOTTOM,
                         backgroundColor: Color(0xFFe74c3c),
                         textColor: Color(0xffffffff));
                   }

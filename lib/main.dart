@@ -26,7 +26,7 @@ class Biller extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => StartPage(),
-        '/UnitCount': (context) => InputPage(),
+        '/UnitCount': (context) => DimensionsPage(),
       },
     );
   }

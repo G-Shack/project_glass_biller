@@ -11,7 +11,7 @@ class _InputPageState extends State<InputPage> {
 
   final _lengthController = TextEditingController();
   final _widthController = TextEditingController();
-  double _heightRate = 10;
+  String _heightRate = '10';
   int _quantValue = 1;
   double _scale = 1;
   double _previousScale = 1.0;
@@ -20,6 +20,16 @@ class _InputPageState extends State<InputPage> {
   int _netQuantity = 0;
 
   List<Map<String, dynamic>> _tableData = [];
+
+  Map<double, String> doubleRateToMM = {
+    10: '3.5mm',
+    20: '4mm',
+    30: '5mm',
+    40: '6mm',
+    50: '7mm',
+    60: '10mm',
+    70: '12mm',
+  };
 
   double _onSubmitLength() {
     String fraction = _lengthController.text;
@@ -76,12 +86,9 @@ class _InputPageState extends State<InputPage> {
       final quantity = _quantValue;
       final length = decimalLength + 1.25;
       final width = decimalWidth + 1.25;
-      final height = _heightRate;
+      final height = double.tryParse(_heightRate) ?? 0.0;
       final area = (length * width * quantity) / 144;
       final price = area * height;
-      _netArea = _netArea + area;
-      _netPrice = _netPrice + price;
-      _netQuantity = _netQuantity + quantity;
 
       setState(() {
         _tableData.add({
@@ -89,7 +96,7 @@ class _InputPageState extends State<InputPage> {
           'serialNumber': _tableData.length + 1,
           'length': _lengthController.text,
           'width': _widthController.text,
-          'height': _heightRate.toStringAsFixed(2),
+          'height': doubleRateToMM[double.tryParse(_heightRate)],
           'area': area.toStringAsFixed(2),
           'price': price.toStringAsFixed(3),
         });
@@ -118,9 +125,6 @@ class _InputPageState extends State<InputPage> {
 
   _clearData() {
     clearDataTable(_tableData, setState);
-    _netArea = 0;
-    _netPrice = 0;
-    _netQuantity = 0;
   }
 
   void clearDataTable(List<Map<String, dynamic>> dataList, Function setState) {
@@ -207,36 +211,36 @@ class _InputPageState extends State<InputPage> {
                         });
                       },
                     ),
-                    DropdownButtonFormField<double>(
+                    DropdownButtonFormField<String>(
                       value: _heightRate,
                       decoration: const InputDecoration(labelText: 'Height'),
                       items: const [
                         DropdownMenuItem(
-                          value: 10,
+                          value: '10',
                           child: Text('3.5mm'),
                         ),
                         DropdownMenuItem(
-                          value: 20,
+                          value: '20',
                           child: Text('4mm'),
                         ),
                         DropdownMenuItem(
-                          value: 30,
+                          value: '30',
                           child: Text('5mm'),
                         ),
                         DropdownMenuItem(
-                          value: 40,
+                          value: '40',
                           child: Text('6mm'),
                         ),
                         DropdownMenuItem(
-                          value: 50,
+                          value: '50',
                           child: Text('7mm'),
                         ),
                         DropdownMenuItem(
-                          value: 60,
+                          value: '60',
                           child: Text('10mm'),
                         ),
                         DropdownMenuItem(
-                          value: 70,
+                          value: '70',
                           child: Text('12mm'),
                         ),
                       ],
